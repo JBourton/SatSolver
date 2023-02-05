@@ -1,0 +1,33 @@
+Here is a Coursework Q&A:
+
+Q: For question 5, should all satisfying assignments be returned?
+
+A: No. Only one (or none).
+
+Q: Can we assume the DIMACS instances use all variables in the range 1 to n where n is declared on the first line?
+
+A: No.
+
+Q: Can we assume that new clauses in DIMACS are on a new line?
+
+A: Yes, for Windows, at least.
+
+Q: Can we assume that there is a single space between literals and before 0 at the end of a clause?
+
+A: Yes.
+
+Q: Can we use libraries like numpy, itertools and copy?
+
+A: Yes, but not more advanced libraries (like the SAT solver).
+
+Q: What version of Python will you be running it on?
+
+A: Most likely Python 3.7. It may be run on some other modern versions of Python 3 also.
+
+Q: Can we assume literals are not repeated in clauses?
+
+A: No.
+
+Q: Can we assume clauses never contain both a literal and its negation?
+
+A: No.
