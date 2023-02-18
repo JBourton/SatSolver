@@ -4,3 +4,4 @@ Q1
 
 Q4
 - https://www.pythontutorial.net/python-basics/python-read-text-file/
+- https://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/SATLINK____DIMACS
