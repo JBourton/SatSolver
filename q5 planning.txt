@@ -19,3 +19,22 @@ I can determine the number of variables by writing code that determines the numb
 If each clause (line) contains at least 1 +ve number, then it must evaulate to True.
 If all the clauses evaulate to True, the formula is satisfiable (because the clauses are AND'd together), and if not, return not satisfiable.
 
+Could create a list that takes the clause_set and replaces 1, 2, 3 with T or F
+
+I have a list of all unique variables (in test case [1, 2, 3]. Now I want to replace all instances of each unique variable with T or F.
+
+globalVars = []
+    for i in range(n):
+        globals()[f'v{i}'] = variables[i]
+        globalVars.append(globals()[f'v{i}'])
+
+    globalVars[0] = True
+    print(globalVars)
+
+for variable in clause:
+	print(variable)
+
+
+Inside first while loop, create dictionary storing unique character as key and boolean value as the value.
+The call the replace lambda using a lookup.
+
