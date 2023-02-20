@@ -13,11 +13,9 @@ def simple_sat_solve(clause_set):
     # Determine number of variables
     variables = unique_values(clause_set)
     n = len(variables)
-    # print(variables)
 
     # Generate truth table orderings of combinations to test
     truth_table = list(itertools.product([False, True], repeat=n))
-    # print(truth_table)
 
     # Iterate through all rows of the generated Truth table, replacing each unique variable with T or F
     i = 0
@@ -45,7 +43,11 @@ def simple_sat_solve(clause_set):
             # If the disjunctive doesn't contain at least one True value, the expression cannot be satisfied
             if True not in clause:
                 print("Unsatisfiable")
-                continue
+                # satisfiable = False
+                break
+
+        # Basically, to top this off we need to do a for each on the expression to check every clause contains
+        # at least 1 True
 
         print(expression)
 
