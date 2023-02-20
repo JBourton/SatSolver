@@ -10,4 +10,12 @@ There are 2^n possible combinations to try.
 
 Hence, itertools will come in useful! (Itertools.product?)
 Itertools.combinations() (used here: https://www.geeksforgeeks.org/itertools-combinations-module-python-print-possible-combinations/) looks promising
+Find all the permutations of v1,v2,v3 in boolean form and identify if any TTTs are present; once a TTT is found, return combination and stop
+Maybe all possible combinations of T and F can be [TF, 3]
+Something like this, with items and boolean values might work: https://www.tek-tips.com/viewthread.cfm?qid=1796539
+
+I can determine the number of variables by writing code that determines the number of unique elements in the list, less the -ve sign.
+
+If each clause (line) contains at least 1 +ve number, then it must evaulate to True.
+If all the clauses evaulate to True, the formula is satisfiable (because the clauses are AND'd together), and if not, return not satisfiable.
 
