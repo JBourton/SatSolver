@@ -38,3 +38,7 @@ for variable in clause:
 Inside first while loop, create dictionary storing unique character as key and boolean value as the value.
 The call the replace lambda using a lookup.
 
+j = 0
+while j < len(expression):
+	clause = expression[j]
+

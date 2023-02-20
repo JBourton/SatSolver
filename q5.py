@@ -13,42 +13,44 @@ def simple_sat_solve(clause_set):
     # Determine number of variables
     variables = unique_values(clause_set)
     n = len(variables)
-    #print(variables)
+    # print(variables)
 
     # Generate truth table orderings of combinations to test
     truth_table = list(itertools.product([False, True], repeat=n))
-    #print(truth_table)
+    # print(truth_table)
 
     # Iterate through all rows of the generated Truth table, replacing each unique variable with T or F
     i = 0
     while i < len(truth_table):
         expression = copy.deepcopy(clause_set)
-        print(truth_table[i])
-        # Inside this we want to make a list in `expression` that replaces the values with T and F
 
         # Store dictionary of {unique variable : boolean value}
         variable_values = dict(zip(variables, truth_table[i]))
         print(variable_values)
 
+        # Replace integers with boolean values
         for clause in expression:
-            pass
+            print(clause)
+            k = 0
+            while k < len(clause):
+                variable = clause[k]
+                if variable < 0:
+                    variable = not (variable_values[abs(variable)])
+                else:
+                    variable = (variable_values[abs(variable)])
 
-            # Deal with -ve values here
+                clause[k] = variable
+                k += 1
 
-            # Replace Values in a List using Lambda Function
-            #clause = list(map(lambda x: True, clause))
-            #print(clause)
+            # If the disjunctive doesn't contain at least one True value, the expression cannot be satisfied
+            if True not in clause:
+                print("Unsatisfiable")
+                continue
 
+        print(expression)
 
-            # replace 1, 2, 3 with corresponding truth value
-            # Basically replicate this:
-            # replace Pant with Ishan
-            # l = list(map(lambda x: x.replace('Pant', 'Ishan'), l))
-            # so probably a dictionary would be best here
-
+        print()
         i += 1
-
-    print(clause_set)
 
     return "End of function"
 
