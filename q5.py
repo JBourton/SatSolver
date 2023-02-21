@@ -4,8 +4,8 @@ import numpy as np
 from collections import Counter
 
 # Below represents (v1 ∨ ¬v2) ∧ (¬v1 ∨ v3)
-# clauses = [[1, -2], [-1, 3]]
-clauses = [1, -2, 3]
+clauses = [[1, -2], [-1, 3]]
+# clauses = [1, -2, 3]
 
 
 def simple_sat_solve(clause_set):
@@ -20,6 +20,23 @@ def simple_sat_solve(clause_set):
             clause_set_format = np.array(clause_set_format).reshape(len(clause_set_format), 1).tolist()
             break
         check += 1
+
+    # Determine number of unique values in the clause set
+    def unique_values(clause_set):
+        # Generate list of clauses without negations
+        less_negations = copy.deepcopy(clause_set)
+        value = 0
+        while value < len(less_negations):
+            subvalue = 0
+            while subvalue < len(less_negations[value]):
+                if less_negations[value][subvalue] < 0:
+                    less_negations[value][subvalue] = abs(less_negations[value][subvalue])
+                subvalue += 1
+            value += 1
+
+        # Generate list of unique values
+        uniqueVals = list(set(itertools.chain(*less_negations)))
+        return uniqueVals
 
     # Determine number of variables
     variables = unique_values(clause_set_format)
@@ -67,24 +84,6 @@ def simple_sat_solve(clause_set):
         i += 1
 
     return "Expression " + str(clause_set) + " is unsatisfiable"
-
-
-# Determine number of unique values in the clause set
-def unique_values(clause_set):
-    # Generate list of clauses without negations
-    less_negations = copy.deepcopy(clause_set)
-    value = 0
-    while value < len(less_negations):
-        subvalue = 0
-        while subvalue < len(less_negations[value]):
-            if less_negations[value][subvalue] < 0:
-                less_negations[value][subvalue] = abs(less_negations[value][subvalue])
-            subvalue += 1
-        value += 1
-
-    # Generate list of unique values
-    uniqueVals = list(set(itertools.chain(*less_negations)))
-    return uniqueVals
 
 
 result = simple_sat_solve(clauses)
