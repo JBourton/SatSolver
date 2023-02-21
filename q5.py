@@ -1,12 +1,11 @@
 import itertools
 import copy
 import numpy as np
-from collections import Counter
 
 # Below represents (v1 ∨ ¬v2) ∧ (¬v1 ∨ v3)
-clauses = [[1, -2], [-1, 3]]
-# clauses = [1, -2, 3]
-
+# clauses = [[1, -2], [-1, 3]]
+# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
+clauses = ['1', '-2', '3']
 
 def simple_sat_solve(clause_set):
     if len(clause_set) == 0:
@@ -20,6 +19,9 @@ def simple_sat_solve(clause_set):
             clause_set_format = np.array(clause_set_format).reshape(len(clause_set_format), 1).tolist()
             break
         check += 1
+
+    # Convert list of strings into integers
+    clause_set_format = [list(map(int, i)) for i in clause_set_format]
 
     # Determine number of unique values in the clause set
     def unique_values(clause_set):
@@ -36,7 +38,8 @@ def simple_sat_solve(clause_set):
 
         # Generate list of unique values
         uniqueVals = list(set(itertools.chain(*less_negations)))
-        return uniqueVals
+        uniqueVals_less_zero = [value for value in uniqueVals if value != 0]
+        return uniqueVals_less_zero
 
     # Determine number of variables
     variables = unique_values(clause_set_format)
