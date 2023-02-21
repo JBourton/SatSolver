@@ -1,14 +1,24 @@
 import itertools
 import copy
+import numpy as np
 from collections import Counter
 
 # Below represents (v1 ∨ ¬v2) ∧ (¬v1 ∨ v3)
-clauses = [[1, -2], [-1, 3]]
+# clauses = [[1, -2], [-1, 3]]
+clauses = [1, -2, 3]
 
 
 def simple_sat_solve(clause_set):
     if len(clause_set) == 0:
         return True
+
+    # Convert lines containing a single clause into a 2d list
+    check = 0
+    while check < len(clause_set):
+        if not isinstance(clause_set[check], list):
+            clause_set = np.array(clause_set).reshape(len(clause_set), 1).tolist()
+            break
+        check += 1
 
     # Determine number of variables
     variables = unique_values(clause_set)
@@ -24,11 +34,11 @@ def simple_sat_solve(clause_set):
 
         # Store dictionary of {unique variable : boolean value}
         variable_values = dict(zip(variables, truth_table[i]))
-        print(variable_values)
+        # print(variable_values)
 
         # Replace integers with boolean values
         for clause in expression:
-            print(clause)
+            # print(clause)
             k = 0
             while k < len(clause):
                 variable = clause[k]
@@ -40,21 +50,24 @@ def simple_sat_solve(clause_set):
                 clause[k] = variable
                 k += 1
 
-            # If the disjunctive doesn't contain at least one True value, the expression cannot be satisfied
-            if True not in clause:
-                print("Unsatisfiable")
-                # satisfiable = False
-                break
+        # If the disjunctive doesn't contain at least one True value, the expression cannot be satisfied
+        satisfiable = True
+        elem = 0
+        while elem < len(expression) and satisfiable:
+            if expression[elem].count(True) < 1:
+                satisfiable = False
+            elem += 1
 
-        # Basically, to top this off we need to do a for each on the expression to check every clause contains
-        # at least 1 True
+        if satisfiable:
+            print("Expression is satisfiable with the following boolean values: ")
+            return truth_table[i]
 
         print(expression)
 
         print()
         i += 1
 
-    return "End of function"
+    return "Expression is unsatisfiable"
 
 
 # Determine number of unique values in the clause set

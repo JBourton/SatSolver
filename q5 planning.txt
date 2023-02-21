@@ -42,3 +42,10 @@ j = 0
 while j < len(expression):
 	clause = expression[j]
 
+
+    if not isinstance(clause_set[0], list):
+        print("1d list!")
+        clause_set = np.array(clause_set).reshape(1, 2)
+        print("New clause_set: ")
+        print(clause_set)
+
