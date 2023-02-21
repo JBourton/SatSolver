@@ -13,15 +13,16 @@ def simple_sat_solve(clause_set):
         return True
 
     # Convert lines containing a single clause into a 2d list
+    clause_set_format = copy.deepcopy(clause_set)
     check = 0
-    while check < len(clause_set):
-        if not isinstance(clause_set[check], list):
-            clause_set = np.array(clause_set).reshape(len(clause_set), 1).tolist()
+    while check < len(clause_set_format):
+        if not isinstance(clause_set_format[check], list):
+            clause_set_format = np.array(clause_set_format).reshape(len(clause_set_format), 1).tolist()
             break
         check += 1
 
     # Determine number of variables
-    variables = unique_values(clause_set)
+    variables = unique_values(clause_set_format)
     n = len(variables)
 
     # Generate truth table orderings of combinations to test
@@ -30,7 +31,7 @@ def simple_sat_solve(clause_set):
     # Iterate through all rows of the generated Truth table, replacing each unique variable with T or F
     i = 0
     while i < len(truth_table):
-        expression = copy.deepcopy(clause_set)
+        expression = copy.deepcopy(clause_set_format)
 
         # Store dictionary of {unique variable : boolean value}
         variable_values = dict(zip(variables, truth_table[i]))
@@ -59,15 +60,13 @@ def simple_sat_solve(clause_set):
             elem += 1
 
         if satisfiable:
-            print("Expression is satisfiable with the following boolean values: ")
+            print("Expression " + str(clause_set) + " is satisfiable with the following boolean values: ")
             return truth_table[i]
 
-        print(expression)
-
-        print()
+        # print(expression)
         i += 1
 
-    return "Expression is unsatisfiable"
+    return "Expression " + str(clause_set) + " is unsatisfiable"
 
 
 # Determine number of unique values in the clause set
