@@ -1,3 +1,4 @@
+import copy
 def branching_sat_solve(partial_assignment, clause_set):
     # If clause set contains empty clauses, UNSAT
     if [] in clause_set:
@@ -10,16 +11,15 @@ def branching_sat_solve(partial_assignment, clause_set):
     chosen_literal = abs(clause_set[0][0])
     partial_assignment.append(chosen_literal)
 
-    # TODO: issue here is the we initialise a for i = 1 to n but then alter the value of n
-    for clause in clause_set:
-        # print(clause)
+    # Create copy to allow deletion via iteration
+    for clause in clause_set[:]:
         # Remove clauses containing True instance of this variable
         if chosen_literal in clause:
             clause_set.remove(clause)
         # Remove negation of this variable from all disjunctions
         elif -chosen_literal in clause:
             clause.remove(-chosen_literal)
-
+            # Remove clause from original instead of copy
     print(clause_set)
 
     # TODO: call function twice with chosen variable, and it's negation

@@ -16,17 +16,3 @@ So this clause set is satisfiable under T F T i.e. [1, 0, 1].
 - Then, set value to F and repeat
 
 
-    for clause in clause_set:
-        # print(clause)
-
-        if chosen_literal in clause:
-            clause_set.remove(clause)
-
-        elif -chosen_literal in clause:
-            print("hi")
-            clause.remove(-chosen_literal)
-            print(clause)
-
-        print(clause_set)
-
-
