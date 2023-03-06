@@ -1,5 +1,14 @@
-def branching_sat_solve(clause_set, partial_assignment):
-    # If clause_set contains no clauses it is SAT; if it contains empty clauses, UNSAT
-    if clause_set == []:
-        pass
+def branching_sat_solve(partial_assignment, clause_set):
+    # If clause set contains empty clauses, UNSAT
+    if [] in clause_set:
+        return False
+    # If clause_set contains no clauses, SAT;
+    if not clause_set:
+        return partial_assignment
 
+
+# Inputs
+clauses = [[1, -2], [-1, 3]]
+# clauses = [[], [4, 5]]
+partial_assign = [[]]
+print(branching_sat_solve(clauses, partial_assign))

@@ -1,0 +1,9 @@
+- When a variable is set to true, scan the list of lists and find all variables with the true variable; delete them.
+- Then remove the from each clause set the negation of the variable set to true.
+- Need recursion via backtracking: can do this by recursively calling branching_sat_solve twice at the end of the function; 
+once with (partial assigment + new variable, clause_set - new variable) and then again with negation of new variable.
+
+Say we have test list `clauses = [[1, -2], [-1, 3]]`
+
+We set 1 to T, such that `clauses = [3]` (because [1, -2] must be T, and [-1, 3] has the F removed.
+So this clause set is satisfiable under T F T i.e. [1, 0, 1].
