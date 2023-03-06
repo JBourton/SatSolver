@@ -86,7 +86,6 @@ def simple_sat_solve(clause_set):
             print("Expression " + str(clause_set) + " is satisfiable with the following boolean values: ")
             return truth_table[i]
 
-        # print(expression)
         i += 1
 
     return "Expression " + str(clause_set) + " is unsatisfiable"
