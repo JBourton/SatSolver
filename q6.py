@@ -1,8 +1,9 @@
 def branching_sat_solve(partial_assignment, clause_set):
     # Reduce clause set for selected variable
     if partial_assignment:
-        print(partial_assignment)
+        # print("Partial assignment: " + str(partial_assignment))
         chosen_literal = partial_assignment[-1]
+        # print("chosen_literal: " + str(chosen_literal))
         for clause in clause_set[:]:
             # Remove clauses containing True instance of this variable
             if chosen_literal in clause:
@@ -10,11 +11,11 @@ def branching_sat_solve(partial_assignment, clause_set):
             # Remove negation of this variable from all disjunctions
             elif -chosen_literal in clause:
                 clause.remove(-chosen_literal)
-        print(clause_set)
-
+        partial_assignment.pop()
+        # print("clause_set: " + str(clause_set))
 
     # If clause set contains empty clauses, UNSAT
-    if [] in clause_set:
+    if not any(clause_set):
         return False
     # If clause_set contains no clauses, SAT;
     if not clause_set:

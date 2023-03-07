@@ -26,6 +26,8 @@ branching_sat_solve() will be called twice, once with partial_assignment w/ +ve 
 
 Need to take addition/removal from partial_assignment.
 
+Now (probably) need to add negative clause to partial assigment. In example this would be -2.
+
 
 
 
