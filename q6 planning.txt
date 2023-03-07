@@ -15,13 +15,16 @@ So this clause set is satisfiable under T F T i.e. [1, 0, 1].
 - If the value is +ve (i.e. val mod 2 == 0), delete entire disjunction from clause set; else, remove value from disjunction
 - Then, set value to F and repeat
 
-After base conditions, apply removal rules on last element in partial_assignment
+After base conditions, apply removal rules on last element in partial_assignment.
+
 
 Variable selection will occur before initiating recursion.
 
 branching_sat_solve() will be called twice, once with partial_assignment w/ +ve var, and once -ve var:
 	branching_sat_solve(partial_assignment + +ve var, clause_set - +ve var)
 	branching_sat_solve(partial_assignment + -ve var, clause_set - -ve var)
+
+Need to take addition/removal from partial_assignment.
 
 
 
