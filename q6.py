@@ -1,3 +1,4 @@
+# Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
     # Reduce clause set for selected variable
     if partial_assignment:
@@ -14,23 +15,28 @@ def branching_sat_solve(partial_assignment, clause_set):
         partial_assignment.pop()
         # print("clause_set: " + str(clause_set))
 
-    # If clause set contains empty clauses, UNSAT
-    if not any(clause_set):
-        return False
     # If clause_set contains no clauses, SAT;
     if not clause_set:
-        return partial_assignment
+        return True # return partial_assignment
+    # If clause set contains empty clauses, UNSAT
+    if [] in clause_set:
+        print("Hi, fix me plz. Clause set is empty (" + str(clause_set) + ")")
+        return False
 
     # Select new variable to eliminate
     chosen_literal = abs(clause_set[0][0])
     partial_assignment.append(chosen_literal)
+    print("Partial Assignment: " + str(partial_assignment))
+    print("Clause Set: " + str(clause_set))
 
     # Branch on the 2 truth assignments for selected variable
     partial_assignment.append(chosen_literal)
-    branching_sat_solve(partial_assignment, clause_set)
+    if branching_sat_solve(partial_assignment, clause_set):
+        return partial_assignment
     partial_assign.pop()
     partial_assign.append(-chosen_literal)
-    branching_sat_solve(partial_assignment, clause_set)
+    if branching_sat_solve(partial_assignment, clause_set):
+        return partial_assignment
 
     return False
 
@@ -38,5 +44,6 @@ def branching_sat_solve(partial_assignment, clause_set):
 # Inputs
 clauses = [[1, -2], [-1, 3]]
 # clauses = [[], [4, 5]]
+# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
 partial_assign = []
 print(branching_sat_solve(partial_assign, clauses))
