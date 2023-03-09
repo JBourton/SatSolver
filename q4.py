@@ -1,23 +1,25 @@
-import sys
+# Provide user with current URL location
 import os
 
 path = os.getcwd()
-print(path)
+# print(path)
+print("If the file is not parsing properly, please delete any blank lines at the end and try again. Thanks :)")
+print()
 
 
 def load_dimacs():
     clause_set = []
     # Take url as input and read associated DIMACS file
-    url = None
-    try:
-        url = input("Enter url of DIMACS file (including .txt extension): ")
-        if not url:
-            raise ValueError('Invalid URL: Program terminated')
-    except ValueError as e:
-        sys.exit(e)
+    url = input("Enter url of DIMACS file (including .txt extension): ")
+
+    # Interpret user input to reduce chance of error
+    if url[-4:] != ".txt":
+        url = url + ".txt"
+
+    if url[0] != "\\":
+        url = "\\" + url
 
     url = path + url
-    print(url)
 
     f = open(url, "r")
     data = f.read()
@@ -26,13 +28,16 @@ def load_dimacs():
 
     # Parse each line of DIMACS file as CNF
     i = 0
-    while i < len(sat_list) - 1:
+    while i < len(sat_list):
         # Ignore non-comment lines
         if sat_list[i][0] == "c":
             i += 1
             continue
         # Ignore problem line
-        if sat_list[i][0] == "p":
+        elif sat_list[i][0] == "p":
+            i += 1
+            continue
+        elif sat_list[i].strip() == " ":
             i += 1
             continue
 
