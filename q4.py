@@ -10,11 +10,14 @@ def load_dimacs():
     # Take url as input and read associated DIMACS file
     url = None
     try:
-        url = input("Enter url of DIMACS file: ")
+        url = input("Enter url of DIMACS file (including .txt extension): ")
         if not url:
             raise ValueError('Invalid URL: Program terminated')
     except ValueError as e:
         sys.exit(e)
+
+    url = path + url
+    print(url)
 
     f = open(url, "r")
     data = f.read()
@@ -23,7 +26,7 @@ def load_dimacs():
 
     # Parse each line of DIMACS file as CNF
     i = 0
-    while i < len(sat_list):
+    while i < len(sat_list) - 1:
         # Ignore non-comment lines
         if sat_list[i][0] == "c":
             i += 1
