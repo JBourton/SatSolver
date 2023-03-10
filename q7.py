@@ -7,8 +7,9 @@ def unit_propagate(clause_set):
     literal_found = False
     for clause in clause_set:
         if len(clause) == 1:
-            literal_found = True
+            # TODO: Make this work with -ve values (abs())
             literal = clause[0]
+            literal_found = True
             clause_set.remove(clause)
             break
 
