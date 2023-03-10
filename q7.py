@@ -1,41 +1,39 @@
 # Repeatedly simplify clause set by applying rules for single literals
 def unit_propagate(clause_set):
-    print("clause set before unit propagation: " + str(clause_set))
-    literal = None
+    unit_clauses = []
 
-    # Determine if any clauses contain a single literal
-    literal_found = False
-    for clause in clause_set:
-        if len(clause) == 1:
-            literal_found = True
-            literal = clause[0]
-            clause_set.remove(clause)
-            break
+    while True:
+        literal = None
+        print("clause set before unit propagation: " + str(clause_set))
 
-    # TODO: Implement recursion part, then test this
-    if not literal_found:
-        print("hi")
-        return clause_set
-
-    print("Current literal is: " + str(literal))
-
-    if literal:
-        negative_literal = literal * -1
-        # Scan clause set and simplify with new literal
-        for clause in clause_set[:]:
-            print(clause)
-            if literal in clause:
+        # Determine if any clauses contain a single literal
+        for clause in clause_set:
+            if len(clause) == 1:
+                literal = clause[0]
+                unit_clauses.append(clause)
                 clause_set.remove(clause)
-            elif negative_literal in clause:
-                clause.remove(negative_literal)
+                break
 
-        clause_set.append([literal])
+        if literal:
+            print("Current literal is: " + str(literal))
+            negative_literal = literal * -1
+            # Scan clause set and simplify with new literal
+            for clause in clause_set[:]:
+                print(clause)
+                if literal in clause:
+                    clause_set.remove(clause)
+                elif negative_literal in clause:
+                    clause.remove(negative_literal)
+                    if not clause:
+                        clause_set.remove(clause)
 
-        print("and clause set after unit propagation: " + str(clause_set))
+            if not clause_set:
+                break
+            print("and clause set after unit propagation: " + str(clause_set))
 
-        # unit_propagate(clause_set)
-    else:
-        return clause_set
+    # Append single literals
+    clause_set += unit_clauses
+    return clause_set
 
 
 clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
