@@ -30,6 +30,8 @@ def unit_propagate(clause_set):
             if not clause_set:
                 break
             print("and clause set after unit propagation: " + str(clause_set))
+        else:
+            break
 
     # Append single literals
     clause_set += unit_clauses
@@ -37,4 +39,9 @@ def unit_propagate(clause_set):
 
 
 clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+# Representing (x'1 + x'3) (x2 + x'5) (x3 + x4) (x3 + x'4) is clauses = [[-1, -3], [2, -5], [3, 4], [3, -4]]
+# clauses = [[-3], [2, -5], [3, 4], [3, -4]]
 print("Result: " + str(unit_propagate(clauses)))
+
+# TODO: Test should be to bring about an empty clause if a contradiction occurs, and if we have an empty clause,
+#  return it because unsat
