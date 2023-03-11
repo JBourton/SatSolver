@@ -2,6 +2,13 @@
 def unit_propagate(clause_set):
     unit_clauses = []
 
+    # Convert str clause set to int
+    if type(clause_set[0][0]) is str:
+        int_list = []
+        for clause in clause_set:
+            int_list.append([eval(lit) for lit in clause])
+    clause_set = int_list
+
     while True:
         literal = None
         print("clause set before unit propagation: " + str(clause_set))
@@ -44,12 +51,15 @@ def unit_propagate(clause_set):
             break
 
     # Append single literals
-    # clause_set += unit_clauses
+    clause_set += unit_clauses
     return clause_set
 
 
-# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+# input_set = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+input_set = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
+
 # Representing (x'1 + x'3) (x2 + x'5) (x3 + x4) (x3 + x'4) is clauses = [[-1, -3], [2, -5], [3, 4], [3, -4]]
 # clauses = [[-3], [2, -5], [3, 4], [3, -4]]
-clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3], [1]]
-print("Result: " + str(unit_propagate(clauses)))
+# input_set = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3], [1]]
+
+print("Result: " + str(unit_propagate(input_set)))
