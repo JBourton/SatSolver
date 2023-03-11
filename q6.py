@@ -17,7 +17,6 @@ def branching_sat_solve(partial_assignment, clause_set):
         return True
     # If clause set contains empty clauses, UNSAT
     if [] in clause_set:
-        print("Hi, fix me plz. Clause set is empty (" + str(clause_set) + ")")
         return False
 
     # Select new variable to eliminate
@@ -42,7 +41,8 @@ def branching_sat_solve(partial_assignment, clause_set):
 # clauses = [[1, -2], [-1, 3]]
 # clauses = [[], [4, 5]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
-clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
+clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+# clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
 
 partial_assign = []
 print(branching_sat_solve(partial_assign, clauses))
