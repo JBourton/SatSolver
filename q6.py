@@ -41,8 +41,9 @@ def branching_sat_solve(partial_assignment, clause_set):
 # clauses = [[1, -2], [-1, 3]]
 # clauses = [[], [4, 5]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
-clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
-# clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
+# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
+# clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
 
 partial_assign = []
-print(branching_sat_solve(partial_assign, clauses))
+print("Satisfiable by: " + str(branching_sat_solve(partial_assign, clauses)))

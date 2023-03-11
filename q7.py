@@ -44,11 +44,12 @@ def unit_propagate(clause_set):
             break
 
     # Append single literals
-    clause_set += unit_clauses
+    # clause_set += unit_clauses
     return clause_set
 
 
-clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
+# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
 # Representing (x'1 + x'3) (x2 + x'5) (x3 + x4) (x3 + x'4) is clauses = [[-1, -3], [2, -5], [3, 4], [3, -4]]
 # clauses = [[-3], [2, -5], [3, 4], [3, -4]]
+clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3], [1]]
 print("Result: " + str(unit_propagate(clauses)))

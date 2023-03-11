@@ -3,11 +3,10 @@ import copy
 import numpy as np
 
 # Below represents (v1 ∨ ¬v2) ∧ (¬v1 ∨ v3)
-clauses = [[1, -2], [-1, 3]]
-
-
+# clauses = [[1, -2], [-1, 3]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
 # clauses = ['1', '-2', '3']
+clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
 
 
 def simple_sat_solve(clause_set):
