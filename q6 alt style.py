@@ -14,6 +14,7 @@ def branching_sat_solve(partial_assignment, clause_set):
         print("new_clause_set: " + str(copy_set))
         return copy_set
 
+    # Search for a satisfying partial assignment
     def backtrack(updated_partial_assignment, original_clause_set):
         print()
         print("Current partial assignment: " + str(updated_partial_assignment))
@@ -22,9 +23,9 @@ def branching_sat_solve(partial_assignment, clause_set):
             print("clause set empty")
             return updated_partial_assignment
         # If clause set contains empty clauses, UNSAT
-        elif [] in original_clause_set:
-            print("[] in clause set")
-            return False
+        #elif [] in original_clause_set:
+        #    print("[] in clause set")
+        #    return False
 
         # Generate list of remaining unique literals
         unique_set = set()
@@ -32,24 +33,28 @@ def branching_sat_solve(partial_assignment, clause_set):
             for literal in clause:
                 unique_set.add(abs(literal))
         unique_literals = list(unique_set)
-        print("Unique literals: " + str(unique_literals))
+        # print("Unique literals: " + str(unique_literals))
 
+        # Try each literal and its negation at different levels
         for literal in unique_literals:
             if literal not in updated_partial_assignment and -literal not in updated_partial_assignment:
                 # Branch on the 2 truth assignments for selected variable
                 for selected_literal in [literal, -literal]:
-                    if [] in original_clause_set:
-                        print("[] MOST DEFINITELY in clause set")
-                        break
-                    print("next")
                     new_partial_assignment = updated_partial_assignment + [selected_literal]
                     print("new_partial_assignment: " + str(new_partial_assignment))
+
                     # Simplify expression with selected literal
                     new_clause_set = reduce(original_clause_set, selected_literal)
+
                     result = backtrack(new_partial_assignment, new_clause_set)
-                    if result is not False:
-                        print("up condition")
+
+                    if result is False:
+                        # Need some way to revert to original state of clause set - we already have this
+                        pass
+                    else:
                         return result
+
+        return False
 
     return backtrack(partial_assignment, clause_set)
 
