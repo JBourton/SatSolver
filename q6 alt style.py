@@ -1,7 +1,13 @@
 # Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
+    # Convert str clause set to int
+    if type(clause_set[0][0]) is str:
+        int_list = []
+        for clause in clause_set:
+            int_list.append([eval(lit) for lit in clause])
+        clause_set = int_list
+
     # Apply propagation to clause set
-    # TODO: probably something wrong with this function
     def reduce(original_clause_set, chosen_literal):
         print("chosen literal: " + str(chosen_literal))
         copy_set = original_clause_set[:]
@@ -9,9 +15,6 @@ def branching_sat_solve(partial_assignment, clause_set):
             # Remove clauses containing True instance of this variable
             if chosen_literal in clause_line:
                 copy_set.remove(clause_line)
-            # Remove negation of this variable from all disjunctions
-            #elif -chosen_literal in clause_line:
-            #    clause_line.remove(-chosen_literal)
         print("new_clause_set: " + str(copy_set))
         return copy_set
 
@@ -22,10 +25,6 @@ def branching_sat_solve(partial_assignment, clause_set):
         if not original_clause_set:
             print("clause set empty, expression is SAT")
             return updated_partial_assignment
-        # If clause set contains empty clauses, UNSAT
-        # elif [] in original_clause_set:
-        #    print("[] in clause set")
-        #    return False
 
         # Generate list of remaining unique literals
         unique_set = set()
@@ -33,24 +32,23 @@ def branching_sat_solve(partial_assignment, clause_set):
             for literal in clause:
                 unique_set.add(abs(literal))
         unique_literals = list(unique_set)
-        # print("Unique literals: " + str(unique_literals))
 
         # Try each literal and its negation at different levels
         for literal in unique_literals:
-            if literal not in updated_partial_assignment and -literal not in updated_partial_assignment:
+            both_assignments = [literal, -literal]
+            if both_assignments[0] not in updated_partial_assignment and both_assignments[1] not in updated_partial_assignment:
                 # Branch on the 2 truth assignments for selected variable
-                for selected_literal in [literal, -literal]:
+                for selected_literal in both_assignments:
                     new_partial_assignment = updated_partial_assignment + [selected_literal]
                     print("new_partial_assignment: " + str(new_partial_assignment))
 
                     # Simplify expression with selected literal
                     new_clause_set = reduce(original_clause_set, selected_literal)
 
+                    # Backtrack to find satisfying assignment
                     result = backtrack(new_partial_assignment, new_clause_set)
 
-                    if result is not False:
-                        # Need some way to revert to original state of clause set - we already have this
-                        print("Result is: " + str(result))
+                    if result:
                         return result
 
         return False
@@ -58,11 +56,12 @@ def branching_sat_solve(partial_assignment, clause_set):
     return backtrack(partial_assignment, clause_set)
 
 
-clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
+# clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
+input_set = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
 
-print("Original clause set: " + str(clauses))
+print("Original clause set: " + str(input_set))
 partial_assign = []
-satisfiability = branching_sat_solve(partial_assign, clauses)
+satisfiability = branching_sat_solve(partial_assign, input_set)
 if not satisfiability:
     print("UNSAT")
 else:
