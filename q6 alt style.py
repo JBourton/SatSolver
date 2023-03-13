@@ -56,15 +56,8 @@ def branching_sat_solve(partial_assignment, clause_set):
     return backtrack(partial_assignment, clause_set)
 
 
-# Inputs
+# clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
 input_set = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
-# clauses = [[1, -2], [-1, 3]]
-# clauses = [[], [4, 5]]
-# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
-# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
-# clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
-# clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
-clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
 
 print("Original clause set: " + str(input_set))
 partial_assign = []
