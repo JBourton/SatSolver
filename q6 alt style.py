@@ -1,6 +1,7 @@
 # Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
     # Apply propagation to clause set
+    # TODO: probably something wrong with this function
     def reduce(original_clause_set, chosen_literal):
         print("chosen literal: " + str(chosen_literal))
         copy_set = original_clause_set[:]
@@ -9,21 +10,20 @@ def branching_sat_solve(partial_assignment, clause_set):
             if chosen_literal in clause_line:
                 copy_set.remove(clause_line)
             # Remove negation of this variable from all disjunctions
-            elif -chosen_literal in clause_line:
-                clause_line.remove(-chosen_literal)
+            #elif -chosen_literal in clause_line:
+            #    clause_line.remove(-chosen_literal)
         print("new_clause_set: " + str(copy_set))
         return copy_set
 
     # Search for a satisfying partial assignment
     def backtrack(updated_partial_assignment, original_clause_set):
         print()
-        print("Current partial assignment: " + str(updated_partial_assignment))
         # If clause_set contains no clauses, SAT;
         if not original_clause_set:
-            print("clause set empty")
+            print("clause set empty, expression is SAT")
             return updated_partial_assignment
         # If clause set contains empty clauses, UNSAT
-        #elif [] in original_clause_set:
+        # elif [] in original_clause_set:
         #    print("[] in clause set")
         #    return False
 
@@ -48,10 +48,9 @@ def branching_sat_solve(partial_assignment, clause_set):
 
                     result = backtrack(new_partial_assignment, new_clause_set)
 
-                    if result is False:
+                    if result is not False:
                         # Need some way to revert to original state of clause set - we already have this
-                        pass
-                    else:
+                        print("Result is: " + str(result))
                         return result
 
         return False
