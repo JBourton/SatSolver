@@ -7,7 +7,7 @@ def unit_propagate(clause_set):
         int_list = []
         for clause in clause_set:
             int_list.append([eval(lit) for lit in clause])
-    clause_set = int_list
+        clause_set = int_list
 
     while True:
         literal = None
