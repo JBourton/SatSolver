@@ -1,6 +1,6 @@
 # Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
-    # Convert str clause set to int
+    # If str present in clause set convert set to int
     if type(clause_set[0][0]) is str:
         int_list = []
         for clause in clause_set:
@@ -23,7 +23,7 @@ def branching_sat_solve(partial_assignment, clause_set):
         print()
         # If clause_set contains no clauses, SAT;
         if not original_clause_set:
-            print("clause set empty, expression is SAT")
+            print("Clause set empty, expression is SAT")
             return updated_partial_assignment
 
         # Generate list of remaining unique literals
@@ -57,18 +57,19 @@ def branching_sat_solve(partial_assignment, clause_set):
 
 
 # Inputs
-input_set = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
-# clauses = [[1, -2], [-1, 3]]
+# clauses = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
+clauses = [[1, -2], [-1, 3]]
 # clauses = [[], [4, 5]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
 # clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
 # clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
-clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
-
-print("Original clause set: " + str(input_set))
+# clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
+clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5],
+           [1, 2, 4, -8]]
+print("Original clause set: " + str(clauses))
 partial_assign = []
-satisfiability = branching_sat_solve(partial_assign, input_set)
+satisfiability = branching_sat_solve(partial_assign, clauses)
 if not satisfiability:
     print("UNSAT")
 else:

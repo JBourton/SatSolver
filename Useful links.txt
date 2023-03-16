@@ -1,8 +1,0 @@
-Q1
-- http://www.math.caltech.edu/~2014-15/3term/ma006c/02.pdf
-- https://www.utsc.utoronto.ca/~nick/cscB36/additional-notes/complete.pdf
-
-Q4
-- https://www.pythontutorial.net/python-basics/python-read-text-file/
-- https://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/SATLINK____DIMACS
-- https://sahandsaba.com/understanding-sat-by-implementing-a-simple-sat-solver-in-python.html
