@@ -1,0 +1,11 @@
+Q1
+- http://www.math.caltech.edu/~2014-15/3term/ma006c/02.pdf
+- https://www.utsc.utoronto.ca/~nick/cscB36/additional-notes/complete.pdf
+
+Q3:
+- https://www.umsu.de/trees/#(~6x~7y~6zS(x,y,z))~5(~3~7x~6y~7z~3S(x,y,z))
+
+Q4
+- https://www.pythontutorial.net/python-basics/python-read-text-file/
+- https://www.cs.utexas.edu/users/moore/acl2/manuals/current/manual/index-seo.php/SATLINK____DIMACS
+- https://sahandsaba.com/understanding-sat-by-implementing-a-simple-sat-solver-in-python.html

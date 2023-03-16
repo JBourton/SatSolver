@@ -24,7 +24,6 @@ def dpll_sat_solve(partial_assignment, clause_set):
         pure_literals = []
         for literal in unique_literals:
             if -literal not in unique_literals:
-                partial_assignment.append(literal)
                 pure_literals.append(literal)
 
         print("-------------------------------------------------")
@@ -33,6 +32,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
             for clause in clause_set[:]:
                 for pure_literal in pure_literals:
                     if pure_literal in clause:
+                        partial_assignment.append(pure_literal)
                         clause_set.remove(clause)
         print("Clause set after pure literal elimination: " + str(original_clause_set))
         print("-------------------------------------------------")
@@ -41,7 +41,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
     def unit_propagate(clause_set, partial_assignment):
         while True:
             literal = None
-            print("clause set before unit propagation: " + str(clause_set))
+            # print("clause set before unit propagation: " + str(clause_set))
 
             # Determine if any clauses contain a single literal
             for clause in clause_set:
@@ -62,7 +62,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
                 # Add literal to partial assignment
                 partial_assignment.append(literal)
 
-                print("Current literal is: " + str(literal))
+                # print("Current literal is: " + str(literal))
                 negative_literal = literal * -1
                 # Scan clause set and simplify with new literal
                 for clause in clause_set[:]:
@@ -73,7 +73,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
                         clause.remove(negative_literal)
                         if not clause:
                             clause_set.remove(clause)
-                print("clause set after unit propagation: " + str(clause_set))
+                print("Unit propagation: " + str(clause_set))
                 print()
 
                 if not clause_set:
@@ -97,21 +97,21 @@ def dpll_sat_solve(partial_assignment, clause_set):
     def backtrack(updated_partial_assignment, original_clause_set):
         print()
 
+        # Apply unit propagation
+        unit_propagate(original_clause_set, updated_partial_assignment)
+
+        # Apply pure literal elimination
+        pure_literal_elimination(original_clause_set, updated_partial_assignment)
+
+        # Generate remaining unique literals
+        unique_literals = generate_unique_vals(original_clause_set)
+
         # If clause set contains no clauses, SAT;
         if not original_clause_set:
             return updated_partial_assignment
         # If empty clause present, UNSAT
         if [] in original_clause_set:
             return False
-
-        # Apply unit propagation
-        unit_propagate(original_clause_set, updated_partial_assignment)
-
-        # Apply pure literal elimination
-        # pure_literal_elimination(original_clause_set, updated_partial_assignment)
-
-        # Generate remaining unique literals
-        unique_literals = generate_unique_vals(original_clause_set)
 
         # Try each literal and its negation at different levels
         for literal in unique_literals:
