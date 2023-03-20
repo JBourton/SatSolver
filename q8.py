@@ -1,11 +1,4 @@
 def dpll_sat_solve(partial_assignment, clause_set):
-    # If str present in clause set convert set to int
-    if type(clause_set[0][0]) is str:
-        int_list = []
-        for clause in clause_set:
-            int_list.append([eval(lit) for lit in clause])
-        clause_set = int_list
-
     # Apply propagation to clause set
     def reduce(original_clause_set, chosen_literal):
         print("chosen literal: " + str(chosen_literal))
@@ -60,8 +53,10 @@ def dpll_sat_solve(partial_assignment, clause_set):
                     break
 
             if literal:
+                print("literal in unit prop: " + str(literal))
                 # Add literal to partial assignment
                 partial_assignment.append(literal)
+                print("partial_assignment: " + str(partial_assignment))
 
                 # print("Current literal is: " + str(literal))
                 negative_literal = literal * -1
@@ -102,6 +97,8 @@ def dpll_sat_solve(partial_assignment, clause_set):
             print("clause set empty, expression is SAT")
             return updated_partial_assignment
 
+        unit_propagate(original_clause_set, partial_assignment)
+
         # Find most common element to branch on
         # Credit: GeeksForGeeks for basic implementation of selecting the literal with the highest frequency
         # appearance ~ https://www.geeksforgeeks.org/python-find-most-common-element-in-a-2d-list/
@@ -111,9 +108,12 @@ def dpll_sat_solve(partial_assignment, clause_set):
         if available_literals:
             literal = max(available_literals, key=flattened_set.count)
         else:
-            # Satisfying assignment found
-            print("updated partial assign: " + str(updated_partial_assignment))
-            return updated_partial_assignment
+            if len(original_clause_set) == 0:
+                # Satisfying assignment found
+                return updated_partial_assignment
+            else:
+                # UNSAT under current assignment, return up a level
+                return False
 
         # Try each literal and its negation at different levels
         both_assignments = [literal, -literal]
@@ -132,7 +132,6 @@ def dpll_sat_solve(partial_assignment, clause_set):
                     result = backtrack(new_partial_assignment, new_clause_set)
 
                     if result is not False:
-                        print("returning at end of recursion")
                         return result
 
         return False

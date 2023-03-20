@@ -26,13 +26,11 @@ def branching_sat_solve(partial_assignment, clause_set):
         if available_literals:
             literal = max(available_literals, key=flattened_set.count)
         else:
-            print("clause set: " + str(original_clause_set))
-            print(available_literals)
-            print("Hiii")
-            # Satisfying assignment found
             if len(original_clause_set) == 0:
+                # Satisfying assignment found
                 return updated_partial_assignment
             else:
+                # UNSAT under current assignment, return up a level
                 return False
 
         # Try each literal and its negation at different levels
