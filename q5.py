@@ -22,9 +22,6 @@ def simple_sat_solve(clause_set):
             break
         check += 1
 
-    # Convert list of strings into integers
-    clause_set_format = [list(map(int, i)) for i in clause_set_format]
-
     # Determine number of unique values in the clause set
     def unique_values(clause_set):
         # Generate list of clauses without negations

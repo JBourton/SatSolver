@@ -28,6 +28,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
 
         print("-------------------------------------------------")
         print("Pure literals are: " + str(pure_literals))
+        print("(Test); clause set: " + str(clause_set))
         if pure_literals:
             for clause in clause_set[:]:
                 for pure_literal in pure_literals:
@@ -101,7 +102,7 @@ def dpll_sat_solve(partial_assignment, clause_set):
         unit_propagate(original_clause_set, updated_partial_assignment)
 
         # Apply pure literal elimination
-        pure_literal_elimination(original_clause_set, updated_partial_assignment)
+        # pure_literal_elimination(original_clause_set, updated_partial_assignment)
 
         # Generate remaining unique literals
         unique_literals = generate_unique_vals(original_clause_set)
@@ -137,9 +138,10 @@ def dpll_sat_solve(partial_assignment, clause_set):
     return backtrack(partial_assignment, clause_set)
 
 
-# clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
-clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5],
-           [1, 2, 4, -8]]
+clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
+# clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5], [1, 2, 4, -8]]
+# four_queens = [[-1, -5], [-2, -6], [-3, -7], [-4, -8], [-1, -9], [-2, -10], [-3, -11], [-4, -12], [-1, -13], [-2, -14], [-3, -15], [-4, -16], [-1, -17], [-2, -18], [-3, -19], [-4, -20], [-5, -1], [-6, -2], [-7, -3], [-8, -4], [-5, -9], [-6, -10], [-7, -11], [-8, -12], [-5, -13], [-6, -14], [-7, -15], [-8, -16], [-5, -17], [-6, -18], [-7, -19], [-8, -20], [-9, -1], [-10, -2], [-11, -3], [-12, -4], [-9, -5], [-10, -6], [-11, -7], [-12, -8], [-9, -13], [-10, -14], [-11, -15], [-12, -16], [-9, -17], [-10, -18], [-11, -19], [-12, -20], [-13, -1], [-14, -2], [-15, -3], [-16, -4], [-13, -5], [-14, -6], [-15, -7], [-16, -8], [-13, -9], [-14, -10], [-15, -11], [-16, -12], [-13, -17], [-14, -18], [-15, -19], [-16, -20], [-17, -1], [-18, -2], [-19, -3], [-20, -4], [-17, -5], [-18, -6], [-19, -7], [-20, -8], [-17, -9], [-18, -10], [-19, -11], [-20, -12], [-17, -13], [-18, -14], [-19, -15], [-20, -16]]
+# Start of four queens: [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [17, 18, 19, 20],
 # (A OR B) AND (NOT A OR C) AND (D OR E OR NOT B)
 # clauses = [[1, 2], [-1, 3], [4, 5, -2]]
 print("Original clause set: " + str(clauses))

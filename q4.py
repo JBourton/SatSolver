@@ -1,5 +1,6 @@
 # Provide user with current URL location
 import os
+import copy
 
 path = os.getcwd()
 # print(path)
@@ -26,18 +27,31 @@ def load_dimacs():
     sat_list = data.split("\n")
     f.close()
 
+    print(data)
+    print(sat_list)
+
     # Parse each line of DIMACS file as CNF
     i = 0
     while i < len(sat_list):
+        # Ignore blank lines
+        if not sat_list[i]:
+            i += 1
+            continue
         # Ignore non-comment lines
-        if sat_list[i][0] == "c":
+        elif sat_list[i][0] == "c":
             i += 1
             continue
         # Ignore problem line
         elif sat_list[i][0] == "p":
-            i += 1
-            continue
-        elif sat_list[i].strip() == " ":
+            # statement_line = sat_list[i].split()
+            # num_of_vars = int(statement_line[2])
+            # vars_remaining = num_of_vars
+
+            # Ignore variable declaration line
+            # while vars_remaining >= 0:
+            #    i += 1
+            #    declaration_line = sat_list[i].split()
+            #    vars_remaining -= len(declaration_line) - 1
             i += 1
             continue
 
@@ -57,7 +71,10 @@ def load_dimacs():
 
         i += 1
 
-    return clause_set
+    clause_set_format = copy.deepcopy(clause_set)
+    clause_set_format = [list(map(int, i)) for i in clause_set_format]
+
+    return clause_set_format
 
 
 clauses = load_dimacs()
