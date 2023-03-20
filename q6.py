@@ -1,12 +1,5 @@
 # Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
-    # If str present in clause set convert set to int
-    if type(clause_set[0][0]) is str:
-        int_list = []
-        for clause in clause_set:
-            int_list.append([eval(lit) for lit in clause])
-        clause_set = int_list
-
     # Apply propagation to clause set
     def reduce(original_clause_set, chosen_literal):
         print("chosen literal: " + str(chosen_literal))
@@ -37,7 +30,10 @@ def branching_sat_solve(partial_assignment, clause_set):
             print(available_literals)
             print("Hiii")
             # Satisfying assignment found
-            return updated_partial_assignment
+            if len(original_clause_set) == 0:
+                return updated_partial_assignment
+            else:
+                return False
 
         # Try each literal and its negation at different levels
         both_assignments = [literal, -literal]
