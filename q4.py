@@ -27,9 +27,6 @@ def load_dimacs():
     sat_list = data.split("\n")
     f.close()
 
-    print(data)
-    print(sat_list)
-
     # Parse each line of DIMACS file as CNF
     i = 0
     while i < len(sat_list):

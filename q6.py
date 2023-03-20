@@ -17,6 +17,9 @@ def branching_sat_solve(partial_assignment, clause_set):
         if not original_clause_set:
             print("clause set empty, expression is SAT")
             return updated_partial_assignment
+        elif [] in original_clause_set:
+            print("clause set contains an empty clause, UNSAT")
+            return False
 
         # Find most common element to branch on
         # Credit: GeeksForGeeks for basic implementation of selecting the literal with the highest frequency
@@ -60,13 +63,13 @@ def branching_sat_solve(partial_assignment, clause_set):
 # Inputs
 # clauses = [['1', '-2'], ['1', '2'], ['-1', '-2'], ['-1', '2'], ['1']]
 # clauses = [[1, -2], [-1, 3]]
-# clauses = [[], [4, 5]]
+clauses = [[], [4, 5]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
 # clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2], [1]]
 # clauses = [[-1, 2, 3], [1, 3, 4], [1, 3, -4], [1, -3, 4], [1, -3, -4], [-2, -3, 4], [-1, 2, -3], [-1, -2, 3]]
 # clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
 # clauses = [[2, 3], [-1, -3], [-1, -2, 3], [4, 1, -3], [-4, 1, 3]]
-clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5], [1, 2, 4, -8]]
+# clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5], [1, 2, 4, -8]]
 four_queens = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [17, 18, 19, 20], [-1, -5], [-2, -6],
                [-3, -7], [-4, -8], [-1, -9], [-2, -10], [-3, -11], [-4, -12], [-1, -13], [-2, -14],
                [-3, -15], [-4, -16], [-1, -17], [-2, -18], [-3, -19], [-4, -20], [-5, -1], [-6, -2], [-7, -3], [-8, -4],
