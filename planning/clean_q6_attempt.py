@@ -9,21 +9,20 @@ def branching_sat_solve(partial_assignment, clause_set):
 
     # Select most common literal to branch on
     flattened_clause_set = [lit for clause in clause_set for lit in clause]
+    available_literals = list({lit for lit in flattened_clause_set if -lit not in partial_assignment and lit not in partial_assignment})
     literal_occurrences = Counter(flattened_clause_set)
 
-    branch_literal = None
-    for lit, index in literal_occurrences.most_common():
-        if lit not in partial_assignment and -lit not in partial_assignment:
-            branch_literal = lit
-            break
+    branch_literal = available_literals[0]
 
     # If there are no more literals to branch on, SAT
     if branch_literal is None:
         return False
 
     # Branch on the 2 truth assignments of chosen literal
-    assignments = [-branch_literal, branch_literal]
-    for selected_literal in assignments:
+    truth_assignments = [branch_literal, -branch_literal]
+
+    for selected_literal in truth_assignments:
+        # print("Selected literal: " + str(selected_literal))
         reduced_clause_set = []
         new_partial_assignment = partial_assignment + [selected_literal]
 
@@ -55,7 +54,7 @@ four_queens = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [1
                [-19, -11], [-20, -12], [-17, -13], [-18, -14], [-19, -15], [-20, -16]]
 partial_assign = []
 
-print("Original clause set: " + str(clauses))
+print("Original clause set: " + str(four_queens))
 print()
 solution = branching_sat_solve(partial_assign, four_queens)
 if solution is not False:
