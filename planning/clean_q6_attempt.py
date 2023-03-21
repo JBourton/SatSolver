@@ -35,7 +35,7 @@ def branching_sat_solve(partial_assignment, clause_set):
 
             if result is not False:
                 print("Partial assignment: " + str(new_partial_assignment))
-                return new_partial_assignment
+                return result
 
         return False
 
