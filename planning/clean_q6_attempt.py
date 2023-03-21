@@ -15,13 +15,27 @@ def branching_sat_solve(partial_assignment, clause_set):
 
         branch_literal = None
         for lit, index in literal_occurrences.most_common():
-            if lit not in updated_partial_assignment:
+            if lit not in updated_partial_assignment and -lit not in updated_partial_assignment:
                 branch_literal = lit
                 break
+        print("branch literal: " + str(branch_literal))
 
         # If there are no more literals to branch on, SAT
         if branch_literal is None:
-            return updated_partial_assignment
+            return False
+
+        assignments = [-branch_literal, branch_literal]
+        for selected_literal in assignments:
+            new_partial_assignment = updated_partial_assignment + [selected_literal]
+
+            # Remove all instances of selected literal from the clause set
+            reduced_clause_set = [clause for clause in original_clause_set if selected_literal not in clause]
+
+            result = backtrack(new_partial_assignment, reduced_clause_set)
+
+            if result is not False:
+                print("Partial assignment: " + str(new_partial_assignment))
+                return new_partial_assignment
 
         return False
 
@@ -30,10 +44,12 @@ def branching_sat_solve(partial_assignment, clause_set):
 
 clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5],
            [1, 2, 4, -8]]
-partial_assign = [2, 1, 4, -1, 5, -2, 6, -7, -8, 3, -3, -4, -6, 9, -5]
+partial_assign = []
 
-result = branching_sat_solve(partial_assign, clauses)
-if result is not False:
-    print("Satisfying assignment found: " + str(result))
+print("Original clause set: " + str(clauses))
+print()
+solution = branching_sat_solve(partial_assign, clauses)
+if solution is not False:
+    print("Satisfying assignment found: " + str(solution))
 else:
     print("UNSAT")
