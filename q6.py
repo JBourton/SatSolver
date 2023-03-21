@@ -2,17 +2,17 @@
 def branching_sat_solve(partial_assignment, clause_set):
     # Apply propagation to clause set
     def reduce(original_clause_set, chosen_literal):
-        print("chosen literal: " + str(chosen_literal))
-        copy_set = original_clause_set[:]
+        # print("chosen literal: " + str(chosen_literal))
+        copy_set = original_clause_set
         for clause_line in copy_set[:]:
             # Remove clauses containing True instance of this variable
             if chosen_literal in clause_line:
                 copy_set.remove(clause_line)
-        print("new_clause_set: " + str(copy_set))
+        # print("new_clause_set: " + str(copy_set))
         return copy_set
 
     def backtrack(updated_partial_assignment, original_clause_set):
-        print()
+        # print()
         # If clause set contains no clauses, SAT;
         if not original_clause_set:
             print("clause set empty, expression is SAT")
@@ -44,7 +44,7 @@ def branching_sat_solve(partial_assignment, clause_set):
             for selected_literal in both_assignments:
                 if -literal not in updated_partial_assignment:
                     new_partial_assignment = updated_partial_assignment + [selected_literal]
-                    print("new_partial_assignment: " + str(new_partial_assignment))
+                    # print("new_partial_assignment: " + str(new_partial_assignment))
 
                     # Simplify expression with selected literal
                     new_clause_set = reduce(original_clause_set, selected_literal)
@@ -80,9 +80,9 @@ four_queens = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [1
                [-13, -9], [-14, -10], [-15, -11], [-16, -12], [-13, -17], [-14, -18], [-15, -19], [-16, -20], [-17, -1],
                [-18, -2], [-19, -3], [-20, -4], [-17, -5], [-18, -6], [-19, -7], [-20, -8], [-17, -9], [-18, -10],
                [-19, -11], [-20, -12], [-17, -13], [-18, -14], [-19, -15], [-20, -16]]
-print("Original clause set: " + str(clauses))
+print("Original clause set: " + str(four_queens))
 partial_assign = []
-satisfiability = branching_sat_solve(partial_assign, clauses)
+satisfiability = branching_sat_solve(partial_assign, four_queens)
 if not satisfiability:
     print("UNSAT")
 else:
