@@ -4,36 +4,36 @@ def branching_sat_solve(partial_assignment, clause_set):
     if not clause_set:
         return partial_assignment
 
-    # Select most common literal to branch on
+    # Select a literal to branch on
     flattened_clause_set = [lit for clause in clause_set for lit in clause]
     available_literals = list(
         {lit for lit in flattened_clause_set if -lit not in partial_assignment and lit not in partial_assignment})
 
     # If there are no more literals to branch on, SAT
     if not available_literals:
-        return partial_assignment
+        return False
 
-    branch_literal = available_literals[0]
+    # Try each of the available literals
+    for branch_lit in available_literals:
+        # Branch on the 2 truth assignments of chosen literal
+        truth_assignments = [branch_lit, -branch_lit]
 
-    # Branch on the 2 truth assignments of chosen literal
-    truth_assignments = [branch_literal, -branch_literal]
+        for selected_literal in truth_assignments:
+            reduced_clause_set = []
+            new_partial_assignment = partial_assignment + [selected_literal]
 
-    for selected_literal in truth_assignments:
-        reduced_clause_set = []
-        new_partial_assignment = partial_assignment + [selected_literal]
+            # Remove all instances of selected literal from the clause set
+            for line in clause_set:
+                if selected_literal not in line:  # and -selected_literal not in line
+                    reduced_clause_set.append(line)
 
-        # Remove all instances of selected literal from the clause set
-        for line in clause_set:
-            if -selected_literal not in line and selected_literal not in line:
-                reduced_clause_set.append(line)
+            # Backtrack until solution found
+            result = branching_sat_solve(new_partial_assignment, reduced_clause_set)
 
-        # Backtrack until solution found
-        result = branching_sat_solve(new_partial_assignment, reduced_clause_set)
+            # Return false if unsat
 
-        print("result: " + str(result))
-
-        if result is not False:
-            return result
+            if result is not False:
+                return result
 
     return False
 

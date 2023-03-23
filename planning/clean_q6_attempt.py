@@ -13,8 +13,6 @@ def branching_sat_solve(partial_assignment, clause_set):
     if not available_literals:
         return False
 
-    print("available literals; " + str(available_literals))
-
     # Try each of the available literals
     for branch_lit in available_literals:
         # Branch on the 2 truth assignments of chosen literal
@@ -24,36 +22,26 @@ def branching_sat_solve(partial_assignment, clause_set):
             reduced_clause_set = []
             new_partial_assignment = partial_assignment + [selected_literal]
 
-            print()
-            print("new partial assignment: " + str(new_partial_assignment))
-            print("original clause set: " + str(clause_set))
-
             # Remove all instances of selected literal from the clause set
             for line in clause_set:
                 if selected_literal not in line:  # and -selected_literal not in line
                     reduced_clause_set.append(line)
-
-            print("Reduced clause set: " + str(reduced_clause_set))
-            print()
-
-            print("selected literal: " + str(selected_literal))
 
             # Backtrack until solution found
             result = branching_sat_solve(new_partial_assignment, reduced_clause_set)
 
             # Return false if unsat
 
-
-            print("result: " + str(result))
-
-            if result is not False:  # and not reduced_clause_set
+            if result is not False:
                 return result
 
     return False
 
 
-clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5],
-           [1, 2, 4, -8]]
+clauses = [[1, -2], [-1, -2], [-1, 2], [1, 3], [2, -3, 4], [2, -4, 5], [3, 4, -5], [3, -4, 6], [-4, -5, 6], [-4, 5, -6], [-6, 7], [-6, -8], [6, 9], [-6, 10], [-6, -11], [7, -8], [-7, 8], [-8, -9], [9, 10], [9, -11], [-10, 11], [-1, -7, 8], [2, 5, 9], [-3, 4, -8], [1, -5, -10], [-2, -6, -11]]
+# clauses = [[-1, 2], [-1, -4], [-1, -5], [1, -3], [1, -7], [1, -8], [-2, -3, 4], [-2, 3, -4], [2, -4, 5], [2, 4, -5], [-3, 4, 6], [-3, -4, -6], [-4, -5, 6], [-4, -6, 7], [-5, -7, 8], [-5, 6, -8], [6, 8, -9], [-7, 8, -9], [1, 2, 3], [-2, 5, 7]]
+# clauses = [[-1, 2, 3], [1, -2, 3], [1, 2, -3], [-1, -2, -3, 4], [1, 2, -4], [-1, -3, 4], [1, -3, -4], [-1, 2, -4], [2, 3, 5], [2, 4, 5], [-3, 4, 5], [1, -5, 6], [-1, 5, -6], [-4, -5, 7], [-5, 6, -7]]
+# clauses = [[1], [1, 4, 5], [-1, -2], [-1, 3], [-3, 2, 6], [6, 2, -7, -4, 5], [-6, 2, -7, -8, 9], [-1, -2, 4, -5], [1, 2, 4, -8]]
 four_queens = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [17, 18, 19, 20], [-1, -5], [-2, -6],
                [-3, -7], [-4, -8], [-1, -9], [-2, -10], [-3, -11], [-4, -12], [-1, -13], [-2, -14],
                [-3, -15], [-4, -16], [-1, -17], [-2, -18], [-3, -19], [-4, -20], [-5, -1], [-6, -2], [-7, -3], [-8, -4],
