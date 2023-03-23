@@ -1,14 +1,6 @@
 import itertools
 import copy
 import numpy as np
-
-# Below represents (v1 ∨ ¬v2) ∧ (¬v1 ∨ v3)
-# clauses = [[1, -2], [-1, 3]]
-# clauses = [[1, -2], [1, 2], [-1, -2], [-1, 2]]
-# clauses = ['1', '-2', '3']
-clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
-
-
 def simple_sat_solve(clause_set):
     if len(clause_set) == 0:
         return True
@@ -18,7 +10,9 @@ def simple_sat_solve(clause_set):
     check = 0
     while check < len(clause_set_format):
         if not isinstance(clause_set_format[check], list):
-            clause_set_format = np.array(clause_set_format).reshape(len(clause_set_format), 1).tolist()
+            clause_array = np.array(clause_set_format)
+            clause_array = clause_array.reshape(len(clause_set_format), 1)
+            clause_set_format = list(clause_array)
             break
         check += 1
 
@@ -31,7 +25,8 @@ def simple_sat_solve(clause_set):
             subvalue = 0
             while subvalue < len(less_negations[value]):
                 if less_negations[value][subvalue] < 0:
-                    less_negations[value][subvalue] = abs(less_negations[value][subvalue])
+                    positive_val = abs(less_negations[value][subvalue])
+                    less_negations[value][subvalue] = positive_val
                 subvalue += 1
             value += 1
 
@@ -54,7 +49,6 @@ def simple_sat_solve(clause_set):
 
         # Store dictionary of {unique variable : boolean value}
         variable_values = dict(zip(variables, truth_table[i]))
-        # print(variable_values)
 
         # Replace integers with boolean values
         for clause in expression:
@@ -87,5 +81,6 @@ def simple_sat_solve(clause_set):
     return "Expression " + str(clause_set) + " is unsatisfiable"
 
 
+clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
 result = simple_sat_solve(clauses)
 print(result)

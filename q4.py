@@ -40,15 +40,6 @@ def load_dimacs():
             continue
         # Ignore problem line
         elif sat_list[i][0] == "p":
-            # statement_line = sat_list[i].split()
-            # num_of_vars = int(statement_line[2])
-            # vars_remaining = num_of_vars
-
-            # Ignore variable declaration line
-            # while vars_remaining >= 0:
-            #    i += 1
-            #    declaration_line = sat_list[i].split()
-            #    vars_remaining -= len(declaration_line) - 1
             i += 1
             continue
 

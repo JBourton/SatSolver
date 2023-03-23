@@ -1,45 +1,31 @@
-# Repeatedly simplify clause set by applying rules for single literals
+# Iteratively reduce clause set by applying single literal rule
 def unit_propagate(clause_set):
-    # If str present in clause set convert set to int
-    if type(clause_set[0][0]) is str:
-        int_list = []
-        for clause in clause_set:
-            int_list.append([eval(lit) for lit in clause])
-        clause_set = int_list
-
     while True:
         literal = None
-        print("clause set before unit propagation: " + str(clause_set))
 
-        # Determine if any clauses contain a single literal
+        # Search for presence of single literal
         for clause in clause_set:
             if len(clause) == 1:
                 literal = clause[0]
                 negative_literal = literal * -1
 
-                # Scan clause set to determine if contradiction is present
-                if [negative_literal] in clause_set:
+                # Search clause set to determine if contradiction is present
+                if negative_literal in clause_set:
                     clause_set.remove(clause)
-                    clause_set.append([])
                     break
 
                 clause_set.remove(clause)
                 break
 
         if literal:
-            print("Current literal is: " + str(literal))
-            negative_literal = literal * -1
-            # Scan clause set and simplify with new literal
+            # Search clause set and simplify with new literal
             for clause in clause_set[:]:
-                # print(clause)
                 if literal in clause:
                     clause_set.remove(clause)
                 elif negative_literal in clause:
                     clause.remove(negative_literal)
                     if not clause:
                         clause_set.remove(clause)
-            print("clause set after unit propagation: " + str(clause_set))
-            print()
 
             if not clause_set:
                 break
