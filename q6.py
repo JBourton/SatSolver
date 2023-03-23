@@ -1,13 +1,16 @@
+import collections
 # Given a clause set in CNF, return a satisfying partial assignment, or False is none exists
 def branching_sat_solve(partial_assignment, clause_set):
     # If clause set is empty, SAT
     if not clause_set:
         return partial_assignment
 
-    # Select a literal to branch on
+    # Select most common literal to branch on
     flattened_clause_set = [lit for clause in clause_set for lit in clause]
+    counter = collections.Counter(flattened_clause_set)
+    ordered_literals = [lit for lit, item in counter.most_common()]
     available_literals = list(
-        {lit for lit in flattened_clause_set if -lit not in partial_assignment and lit not in partial_assignment})
+        {lit for lit in ordered_literals if -lit not in partial_assignment and lit not in partial_assignment})
 
     # If there are no more literals to branch on, SAT
     if not available_literals:
