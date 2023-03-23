@@ -1,6 +1,8 @@
 import itertools
 import copy
 import numpy as np
+
+
 def simple_sat_solve(clause_set):
     if len(clause_set) == 0:
         return True
@@ -79,8 +81,3 @@ def simple_sat_solve(clause_set):
         i += 1
 
     return "Expression " + str(clause_set) + " is unsatisfiable"
-
-
-clauses = [[1, 2, 3], [-1, 2, 3], [1, -2, 3], [1, 2, -3]]
-result = simple_sat_solve(clauses)
-print(result)
